@@ -1,0 +1,54 @@
+---
+description: Addon main windows build their frame, header, and panels from WoWF.UI
+globs: Addons/**/*.lua
+alwaysApply: false
+---
+
+# Window header and frame
+
+Build windows from the shared helpers in `Common/UI/` (`WoWF.UI`). DeathNote's `CreateJournal` in `Addons/DeathNote/DeathNoteJournal.lua` is the reference. Do not copy the helper bodies into an addon.
+
+## Palette
+
+Keep a local `C` table with these keys (see `Common/UI/Core.lua`):
+
+`void`, `bg`, `panel`, `panelHi`, `edge`, `accent`, `accentDim`, `bone`, `muted`, `select`
+
+Use `accent` for the header rule and hover borders, and `accentDim` for the outer frame and panel lip. Pick each color for the addon; do not reuse another addon's values.
+
+## Calls, in order
+
+```lua
+UI.CreateFrameBorders(frame, C, 2)          -- 2px accentDim outer border + bg fill
+local header = UI.CreateHeader(frame, C, 60, 2)  -- void fill, 2px accent rule
+frame.mark = WoWF.CreateCircleIcon(header, 40, texture, C.accent)
+frame.mark:SetPoint("LEFT", 16, 1)
+frame.close = UI.CreateHeaderButton(header, C, { cross = true, onClick = ... })
+frame.close:SetPoint("RIGHT", -14, 0)
+```
+
+Set `local UI = WoWF.UI` once at the top of the file.
+
+## Header
+
+- The icon is always `WoWF.CreateCircleIcon`, never a square texture.
+- Title: 14px right of the icon, 4px below its top. 18px, uppercase, `bone`.
+- Tagline: 2px under the title. 10px, uppercase, `accentDim`.
+
+## Header buttons (right to left)
+
+1. Close: `UI.CreateHeaderButton(header, C, { cross = true, onClick = ... })`, anchored `RIGHT, -14, 0`.
+2. Settings (if the addon has one): `UI.CreateHeaderButton(header, C, { icon = ..., onClick = ... })`, 8px left of Close.
+3. Dev: `UI.CreateHeaderButton` with magenta `edge`, `fill`, `hoverEdge`, `hoverFill` (see `dev-ui-stands-out`). Create it only inside `if WoWF.DevMode then` and anchor it leftmost, so production buttons do not move when it hides.
+
+Buttons are 26×26, 8px apart.
+
+## Panels and rules
+
+- `UI.MakePanel(parent, C)`: 1px edge, fill inset 1px, dim accent lip across the top.
+- `UI.MakeRule(parent, color)`: 1px separator. Color is required.
+- Content starts 12px below the header, 16px from the left and right edges, and 10px between columns.
+
+## Open question
+
+The bottom margin is 10px in DeathNote and 16px on the sides. The rule does not set a bottom margin until that is decided.

@@ -1,0 +1,36 @@
+---
+description: Development-only controls stand out in color and still follow the window's spacing
+alwaysApply: true
+---
+
+# Dev-only UI stands out
+
+Anything that exists only while `WoWF.DevMode` is true must be obvious at a glance. A player looking at a production window should never wonder whether a control is part of the addon.
+
+## Buttons and panels
+
+- Paint dev buttons a solid exotic color: magenta `(0.85, 0.08, 0.72)` or cyan `(0.15, 0.75, 0.85)`.
+- Do not use the addon's normal gold, parchment, or grey for these controls.
+- Label them by the action (`Reset ledger`), and create them only inside `if WoWF.DevMode then`.
+
+## Spacing still counts
+
+Exotic color is not a reason to crowd the control. Dev UI uses the same margins and alignment as the rest of the window.
+
+- Place a dev button on the window's existing outer margin, not flush to the frame edge.
+- The dialog border draws inside the frame. Clear that border, then use one gap on the left, above, and below. Line the button up with the panel border next to it.
+- Leave that same gap between it and the nearest production panel.
+- Pad the label inside the button, about 14–16px on the left and right, so the text does not touch the fill.
+- Size the button from the label plus that padding. Do not use a tight fixed width.
+
+```lua
+if WoWF.DevMode then
+    local btn = CreateFrame("Button", nil, frame)
+    -- magenta fill, white label
+end
+```
+
+## Chat
+
+- Dev command replies use magenta: `print("|cffff00ff[Addon]|r ...")`.
+- Normal player messages stay on the addon's usual color.

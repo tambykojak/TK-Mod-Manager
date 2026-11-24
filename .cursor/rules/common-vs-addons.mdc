@@ -1,0 +1,73 @@
+# Common vs Libs vs Addons placement
+
+## Layout
+
+| Path | Role |
+|---|---|
+| `Common/` | First-party shared source — **not** a standalone game AddOn |
+| `Common/UI/` | First-party shared window and widget helpers (`WoWF.UI`) |
+| `Libs/` | Third-party vendored packages — **filenames never renamed** on package |
+| `Addons/<Name>/` | Addon root — TOC, `tkmm.config`, `RELEASE.md`, icons. Code is in `src/` |
+| `Scripts/` | Dev tooling only |
+
+## Addon startup
+
+See rule `addon-main-startup`: every addon has `src/Main.lua` (VERSION + load banner). TOC order is `Common\...` → Libs (if needed) → `src\Main.lua` → feature scripts in `src\`. See rule `addon-src-folder`.
+
+## Packaging (install / build / dev)
+
+Shared helper: [`Scripts/wowf-vendor-common.sh`](Scripts/wowf-vendor-common.sh) (`vendor_shared`).
+
+Copy the whole folder. Do not rename files or folders inside `Common/` or `Libs/`.
+
+| Workspace | Packaged |
+|-----|----|
+| `Common/**` | `Common/**` beside `src/` |
+| `Libs/**` | `Libs/**` |
+
+```
+Interface/AddOns/JunkMaster/
+ Common/DevMode.lua
+ Common/Logger.lua
+ Common/UI/CircleIcon.lua
+ Common/UI/Core.lua
+ Common/UI/Window.lua
+ Libs/LibStub/LibStub.lua
+ Libs/LibEditMode/...
+ src/Main.lua
+ src/JunkMaster.lua
+ JunkMaster.toc
+```
+
+`Common/` and `Libs/` are never installed as their own top-level AddOns. The packaged addon has `Common/` beside `src/`, and `Libs/` when the addon uses a library.
+
+### Development mode
+
+- Workspace `Common/DevMode.lua` sets `WoWF.DevMode = true`.
+- **install / in-game via install|dev:** keep `DevMode = true`.
+- **build (production Outputs/):** rewrite to `WoWF.DevMode = false`.
+- Addons check `WoWF.DevMode` for extra logging / experimental behavior.
+
+## TOC rules
+
+- List Common files by their real path (`Common\DevMode.lua`, `Common\Logger.lua`, `Common\UI\Core.lua`).
+- Vendored libs: list real `Libs\...` paths.
+- Order: Common → Libs → `src\Main.lua` → feature scripts in `src\`. Load `Common\UI\Core.lua` before `Common\UI\Window.lua`.
+- Do **not** list renamed names like `CommonDevMode.lua`, `CommonLogger.lua`, or `CommonUI\Core.lua`.
+- Do **not** copy `Common/` or `Libs/` into workspace `Addons/<Name>/` by hand — install/build/dev does that.
+- Do **not** use `require`/imports; WoW loads TOC entries in order into the addon environment.
+
+## Placement
+
+- Put logic in `Common/` when it can reasonably be shared across addons (first-party).
+- Put window and widget helpers in `Common/UI/`.
+- Put third-party libraries in `Libs/<PackageName>/`.
+- Put code in `Addons/<Name>/src/` when it is specific to that addon’s TOC, slash commands, or feature surface. Leave the TOC, `tkmm.config`, `RELEASE.md`, and icons at the addon root.
+
+## When unsure — ask
+
+If placement is unclear, **ask before creating or moving it**. Prefer a short question with a recommendation, e.g.:
+
+> This looks shareable (X). Put it in `Common/` or keep it under `Addons/JunkMaster`?
+
+Use those answers to refine future placement without re-asking the same category once established in the conversation.

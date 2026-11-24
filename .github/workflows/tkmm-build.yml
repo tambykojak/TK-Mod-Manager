@@ -1,0 +1,66 @@
+name: TKMM build
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "tkmm-v*"
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: windows-latest
+            args: ""
+            bash: C:\Program Files\Git\bin\bash.exe
+          - platform: macos-latest
+            args: --target universal-apple-darwin
+            bash: /opt/homebrew/bin/bash
+
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+
+      - uses: swatinem/rust-cache@v2
+        with:
+          workspaces: TKMM/src-tauri -> target
+
+      # The addon build script needs bash 4+ (mapfile); macOS ships 3.2.
+      - name: Install bash (macOS)
+        if: runner.os == 'macOS'
+        run: brew install bash
+
+      - name: Install dependencies
+        working-directory: TKMM
+        run: npm install
+
+      - name: Build addons into Outputs/
+        working-directory: TKMM
+        env:
+          TKMM_BASH: ${{ matrix.bash }}
+        run: npm run bundle-addons
+
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        with:
+          projectPath: TKMM
+          args: ${{ matrix.args }}
+          includeUpdaterJson: true
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tkmm-${{ matrix.platform }}
+          path: TKMM/src-tauri/target/**/release/bundle/

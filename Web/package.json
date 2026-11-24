@@ -1,0 +1,16 @@
+{
+  "name": "tkmm-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "predev": "node scripts/pack.mjs",
+    "prebuild": "node scripts/pack.mjs",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "deploy": "npm run build && node scripts/deploy.mjs"
+  },
+  "dependencies": {
+    "astro": "^5.16.0"
+  }
+}

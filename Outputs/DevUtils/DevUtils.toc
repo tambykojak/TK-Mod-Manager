@@ -1,0 +1,11 @@
+## Interface: 16001
+## Title: DevUtils
+## Version: 0.2.0
+## SavedVariables: DevUtilsDB
+
+Common\DevMode.lua
+Common\Logger.lua
+src\Main.lua
+src\DevUtils.lua
+src\DevUtilsCatalog.lua
+src\DevUtilsPanel.lua

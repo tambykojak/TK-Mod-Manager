@@ -1,0 +1,392 @@
+:root {
+  color-scheme: dark;
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #e8e3d6;
+  background: #121014;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+a {
+  color: #f2c14e;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: #ffd978;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 22px 24px 8px;
+}
+
+.site-header.wide,
+main.wide {
+  max-width: 1180px;
+}
+
+.mark {
+  color: #f2c14e;
+  font-family: Palatino Linotype, Palatino, Georgia, serif;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+}
+
+nav {
+  display: flex;
+  gap: 18px;
+}
+
+nav a {
+  color: #e8e3d6;
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: #f2c14e;
+}
+
+nav a.active {
+  color: #f2c14e;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
+main {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 12px 24px 40px;
+}
+
+.site-footer {
+  margin-top: auto;
+  padding: 8px 24px 28px;
+  color: #a89f90;
+  font-size: 14px;
+  text-align: center;
+}
+
+h1,
+h2 {
+  font-family: Palatino Linotype, Palatino, Georgia, serif;
+  font-weight: 600;
+  color: #f3ecdf;
+}
+
+h1 {
+  margin: 8px 0 8px;
+  font-size: 40px;
+  line-height: 1.15;
+}
+
+.lede {
+  max-width: 62ch;
+  margin: 0 0 28px;
+  color: #cfc6b6;
+}
+
+.manager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 28px;
+  padding: 16px 18px;
+  border: 1px solid #3a342c;
+  border-radius: 10px;
+  background: #1c191f;
+}
+
+.manager h2 {
+  margin: 0 0 4px;
+  font-size: 22px;
+}
+
+.manager p {
+  margin: 0;
+  color: #a89f90;
+}
+
+.soon {
+  flex: none;
+  padding: 8px 14px;
+  border: 1px solid #4a4452;
+  border-radius: 6px;
+  color: #a89f90;
+  font-size: 14px;
+}
+
+.addon-list {
+  border: 1px solid #2f2b35;
+  border-radius: 8px;
+  background: #1d1b21;
+}
+
+.addon-row {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) 72px;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-bottom: 1px solid #26232b;
+}
+
+.addon-row:last-child {
+  border-bottom: none;
+}
+
+.addon-row:hover:not(.head) {
+  background: #24212a;
+}
+
+.addon-row.head {
+  color: #a39d8f;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.addon-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: #26232b;
+}
+
+.addon-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.addon-info:hover {
+  color: inherit;
+}
+
+.addon-info:hover .addon-name {
+  color: #f2c14e;
+}
+
+.addon-name {
+  font-weight: 600;
+}
+
+.addon-line {
+  overflow: hidden;
+  color: #a39d8f;
+  font-size: 12px;
+  line-height: 16px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.addon-version {
+  color: #a39d8f;
+  font-size: 13px;
+}
+
+.version {
+  color: #a89f90;
+  font-family: "Segoe UI", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.prose h2 {
+  margin: 22px 0 8px;
+  font-size: 22px;
+}
+
+.button {
+  display: inline-block;
+  padding: 7px 14px;
+  border-radius: 6px;
+  background: #b8862a;
+  color: #1a1612;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.button:hover {
+  background: #d29c33;
+  color: #1a1612;
+}
+
+.button.disabled {
+  background: #2a2630;
+  color: #a89f90;
+  cursor: default;
+}
+
+.card {
+  padding: 16px 18px 4px;
+  border: 1px solid #2f2b35;
+  border-radius: 8px;
+  background: #1d1b21;
+}
+
+.card h1 {
+  margin-top: 0;
+}
+
+.card .release:last-child {
+  margin-bottom: 12px;
+}
+
+.addon-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.addon-top img {
+  width: 72px;
+  height: 72px;
+  border-radius: 12px;
+}
+
+.addon-sheet {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+  column-gap: 28px;
+  align-items: start;
+}
+
+.addon-sheet .addon-top,
+.addon-sheet .addon-copy {
+  grid-column: 1;
+  min-width: 0;
+}
+
+.addon-shot {
+  margin: 4px 0 16px;
+}
+
+.addon-sheet .addon-shot {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: start;
+  position: sticky;
+  top: 20px;
+  margin: 0;
+}
+
+.addon-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid #3a342c;
+  border-radius: 8px;
+  background: #0e0c10;
+}
+
+.prose p {
+  max-width: 68ch;
+}
+
+.prose ul {
+  max-width: 68ch;
+  padding-left: 1.2em;
+}
+
+.prose code {
+  font-family: Consolas, Menlo, monospace;
+  font-size: 0.92em;
+}
+
+.release {
+  margin: 0 0 22px;
+}
+
+.release h3 {
+  margin: 0 0 6px;
+  font-family: "Segoe UI", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.release .when {
+  margin-left: 8px;
+  color: #a89f90;
+  font-weight: 400;
+  font-size: 13px;
+}
+
+.release ul {
+  margin: 0;
+  padding-left: 1.2em;
+}
+
+.about p,
+.about ul {
+  max-width: 62ch;
+}
+
+.about ul {
+  padding-left: 1.2em;
+}
+
+@media (max-width: 640px) {
+  h1 {
+    font-size: 32px;
+  }
+
+  .manager {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .addon-row.head {
+    display: none;
+  }
+
+  .addon-row {
+    grid-template-columns: 40px minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .addon-icon {
+    margin-top: 2px;
+  }
+
+  .addon-version {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 900px) {
+  .addon-sheet {
+    display: block;
+  }
+
+  .addon-sheet .addon-shot {
+    position: static;
+    margin: 6px 0 18px;
+  }
+}

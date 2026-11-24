@@ -1,0 +1,39 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  wide?: boolean;
+}
+
+const { title, description, wide = false } = Astro.props;
+
+const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
+const onAddons = path === "/" || path.startsWith("/addons");
+const onAbout = path === "/about";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <header class:list={["site-header", { wide }]}>
+      <a class="mark" href="/">TKMM</a>
+      <nav>
+        <a href="/" class={onAddons ? "active" : undefined} aria-current={onAddons ? "page" : undefined}>Addons</a>
+        <a href="/about" class={onAbout ? "active" : undefined} aria-current={onAbout ? "page" : undefined}>About</a>
+      </nav>
+    </header>
+    <slot />
+    <footer class="site-footer">
+      Made with ❤️ by <a href="https://tambykojak.com" rel="noreferrer" target="_blank">Tamby Kojak</a>
+    </footer>
+  </body>
+</html>

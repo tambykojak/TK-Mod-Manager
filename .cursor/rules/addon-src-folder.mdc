@@ -1,0 +1,51 @@
+---
+description: Addon code lives in src/; TOC, listing, notes, and icons stay at the addon root
+alwaysApply: true
+---
+
+# Addon source folder
+
+Every addon under `Addons/<Name>/` keeps its code in `src/`. Configuration and media stay at the addon root.
+
+## Root
+
+- `<Name>.toc`
+- `tkmm.config`
+- `RELEASE.md`
+- Icons and other media (`icon.png`, `icon.tga`)
+
+## `src/`
+
+- `Main.lua`
+- Feature scripts (`JunkMaster.lua`, `JunkMasterPanel.lua`, …)
+- Addon XML, when an addon has any
+
+Do not put the TOC, `tkmm.config`, `RELEASE.md`, or icons inside `src/`.
+
+Packaging copies workspace `Common/` to `Common/` beside `src/`. `Libs/` is copied the same way. Do not rename those files, do not put them inside `src/`, and do not copy them into the workspace addon by hand.
+
+## TOC
+
+List addon scripts with the `src` path. Vendored Common and Libs stay at the addon root, so their TOC lines do not use `src`.
+
+```toc
+## Interface: 16001
+## Title: JunkMaster
+## Version: 0.1.0
+
+Common\DevMode.lua
+Common\Logger.lua
+src\Main.lua
+src\JunkMaster.lua
+```
+
+```
+Addons/JunkMaster/
+  JunkMaster.toc
+  tkmm.config
+  RELEASE.md
+  icon.png
+  src/
+    Main.lua
+    JunkMaster.lua
+```

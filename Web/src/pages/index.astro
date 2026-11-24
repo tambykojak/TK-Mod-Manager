@@ -1,0 +1,47 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { loadAddons } from "../data/addons";
+
+const addons = loadAddons();
+---
+
+<Layout title="TK's Mod Manager" description="WoW Forever addons. TK's Mod Manager installs them.">
+  <main>
+    <h1>Addons for WoW Forever</h1>
+    <p class="lede">TK's Mod Manager installs these addons. The app is not up for download yet.</p>
+
+    <section class="manager">
+      <div>
+        <h2>TK's Mod Manager</h2>
+        <p>One app for installing and updating these addons.</p>
+      </div>
+      <span class="soon">Download coming later</span>
+    </section>
+
+    <section class="addon-list">
+      <div class="addon-row head">
+        <span aria-hidden="true" />
+        <span>Addon</span>
+        <span>Version</span>
+      </div>
+      {
+        addons.map((addon) => (
+          <article class="addon-row">
+            {addon.icon ? (
+              <img class="addon-icon" src={addon.icon} alt="" width="32" height="32" />
+            ) : (
+              <span class="addon-icon" aria-hidden="true" />
+            )}
+            <a class="addon-info" href={`/addons/${addon.slug}`} title="Open addon">
+              <span class="addon-name">{addon.publicName}</span>
+              <span class="addon-line" title={addon.oneLiner}>
+                {addon.oneLiner}
+              </span>
+            </a>
+            <span class="addon-version">{addon.version || "—"}</span>
+          </article>
+        ))
+      }
+    </section>
+  </main>
+</Layout>

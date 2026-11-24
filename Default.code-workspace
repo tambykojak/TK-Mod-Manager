@@ -1,0 +1,30 @@
+{
+	"folders": [
+		{
+			"path": ".",
+			"name": "WoW Forever Addons"
+		},
+		{
+			"path": "Common"
+		},
+		{
+			"path": "Libs"
+		},
+		{
+			"path": "Addons"
+		},
+		{
+			"path": "Outputs"
+		},
+		{
+			"path": "Scripts"
+		},
+		{
+			"path": "TKMM"
+		},
+		{
+			"path": "Web"
+		}
+	],
+	"settings": {}
+}

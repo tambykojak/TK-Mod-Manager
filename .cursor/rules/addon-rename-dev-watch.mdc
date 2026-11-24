@@ -1,0 +1,13 @@
+---
+description: After renaming an addon, stop and restart the wowf-addons-dev watch under the new name.
+alwaysApply: true
+---
+
+# Addon rename → restart dev watch
+
+Whenever an addon folder under `Addons/` is **renamed** (e.g. `LevelPace` → `WenDing`):
+
+1. **Stop** any running `wowf-addons-dev.sh` process for the old addon name (and any watch still pointed at the old path).
+2. **Start** a new watch for the new name via the `wowf-addons-dev` skill (`Scripts/wowf-addons-dev.sh <NewName>`).
+
+Do this in the same turn as the rename when a watch was (or likely is) running — do not wait for the user to ask. Also uninstall/clean the old installed addon name if needed so the game does not keep a stale folder.

@@ -1,0 +1,39 @@
+---
+description: Functional changes update player-facing release notes in the addon folder
+alwaysApply: true
+---
+
+# Addon release notes
+
+A functional change to what a player can do updates `Addons/<Name>/RELEASE.md` in the same turn. Create the file on the first qualifying change. Use the version already in that addon's `Main.lua` (`VERSION`, same as the TOC `## Version`). Do not invent a version.
+
+One entry per update. Newest first. A line that is only `---` separates entries so one note can be lifted out on its own.
+
+Each entry has the version, a title, the local time of the update to the minute (`YYYY-MM-DD HH:MM`), and bullets. The version is the one in `Main.lua` when that update shipped. The same version can appear on more than one entry; the time separates them. A later change in a new minute is a new entry. Add bullets to an entry only when the change is still the same minute.
+
+```markdown
+## 0.3.4 — Sell leftover junk
+2026-11-23 18:49
+
+- Grey items in your bags sell in one pass at a vendor.
+- Items you skip stay off the list until you add them back.
+
+---
+
+## 0.3.3 — Junk sales ledger
+2026-11-23 18:40
+
+- Each vendor trip records what sold and what it was worth.
+```
+
+## What goes in
+
+- Player-facing behavior: a new action, a changed result, or a removed capability.
+- Bullets say what the player can do. Short, plain language. No file names, functions, or implementation.
+- A shared `Common/` change that alters player-facing behavior: update each addon whose players see it.
+
+## What stays out
+
+- Bug fixes, unless the user explicitly says to put that fix in the release notes.
+- Visual changes (layout, color, spacing, icons, copy tweaks), unless the user explicitly says to put that change in the release notes.
+- Developer-only work: dev mode, logging, slash debug, packaging, refactors, and comments.

@@ -1,0 +1,34 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const repos = [
+  { name: "Addons", href: "https://github.com/placeholder/addons" },
+  { name: "TK's Mod Manager", href: "https://github.com/placeholder/tkmm" },
+  { name: "This site", href: "https://github.com/placeholder/site" },
+];
+---
+
+<Layout title="About — TK's Mod Manager" description="A solo developer making WoW Forever mods. The code is open source, with an emphasis on privacy and security.">
+  <main class="about">
+    <h1>About TK's Mod Manager</h1>
+    <p>I'm a solo developer. I make these mods because it's fun.</p>
+    <h2>Open source</h2>
+    <p>
+      The addon you download is the Lua itself, so you can read what you install. The source is on GitHub.
+    </p>
+    <ul>
+      {
+        repos.map((repo) => (
+          <li>
+            <a href={repo.href}>{repo.name}</a>
+          </li>
+        ))
+      }
+    </ul>
+    <h2>Privacy and security</h2>
+    <p>
+      These addons keep their notes on your computer, in the game's saved variables. They do not send that data anywhere.
+    </p>
+    <p>This site is a static page. It has no accounts, no database, and no analytics.</p>
+  </main>
+</Layout>

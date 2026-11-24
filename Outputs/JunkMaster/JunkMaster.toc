@@ -1,0 +1,10 @@
+## Interface: 16001
+## Title: JunkMaster
+## Version: 0.3.3
+## SavedVariables: JunkMasterDB
+
+Common\DevMode.lua
+Common\Logger.lua
+src\Main.lua
+src\JunkMaster.lua
+src\JunkMasterPanel.lua

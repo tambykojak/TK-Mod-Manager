@@ -1,0 +1,47 @@
+---
+description: Every addon uses Main.lua as startup with VERSION + load banner
+alwaysApply: true
+---
+
+# Addon startup — Main.lua
+
+Every addon under `Addons/<Name>/` **must** include a `src/Main.lua` startup script. See rule `addon-src-folder`.
+
+## Responsibilities
+
+`Main.lua` only handles startup:
+
+1. `local VERSION = "x.y.z"` constant (keep in sync with TOC `## Version`)
+2. `Addon.VERSION = VERSION` on the shared addon table
+3. `WoWF.PrintLoadBanner(ADDON_NAME, VERSION)` — no banner calls in feature scripts
+
+```lua
+local ADDON_NAME, Addon = ...
+
+local VERSION = "0.1.0"
+
+Addon.VERSION = VERSION
+
+WoWF.PrintLoadBanner(ADDON_NAME, VERSION)
+```
+
+## TOC load order
+
+`Common\...` → `src\Main.lua` → feature scripts in `src\`. Never put feature logic in `Main.lua`.
+
+```toc
+## Interface: 16001
+## Title: JunkMaster
+## Version: 0.1.0
+
+Common\DevMode.lua
+Common\Logger.lua
+src\Main.lua
+src\JunkMaster.lua
+```
+
+## Feature scripts
+
+- Use `local ADDON_NAME, Addon = ...`
+- Read `Addon.VERSION` when needed; do not redefine VERSION
+- Do not call `PrintLoadBanner` outside `Main.lua`

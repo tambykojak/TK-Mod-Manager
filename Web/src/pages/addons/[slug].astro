@@ -1,0 +1,111 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { findAddon, loadAddons } from "../../data/addons";
+
+export function getStaticPaths() {
+  return loadAddons().map((addon) => ({ params: { slug: addon.slug } }));
+}
+
+const addon = findAddon(Astro.params.slug ?? "");
+if (!addon) {
+  throw new Error(`Unknown addon: ${Astro.params.slug}`);
+}
+
+const paragraphs = addon.description.split(/\n{2,}/).filter((part) => part.length > 0);
+
+function parts(text: string) {
+  return text.split("`");
+}
+---
+
+<Layout title={`${addon.publicName} — TK's Mod Manager`} description={addon.oneLiner || addon.publicName} wide>
+  <main class="wide">
+    <p><a href="/">All addons</a></p>
+    <article class:list={["card", { "addon-sheet": addon.screenshot }]}>
+      <div class="addon-top">
+        {addon.icon && <img src={addon.icon} alt="" width="72" height="72" />}
+        <div>
+          <h1>
+            {addon.publicName} {addon.version && <span class="version">v{addon.version}</span>}
+          </h1>
+        </div>
+      </div>
+
+      {
+        addon.screenshot && (
+          <figure class="addon-shot">
+            <img src={addon.screenshot} alt={`${addon.publicName} screenshot`} />
+          </figure>
+        )
+      }
+
+      <div class="addon-copy">
+      <section class="prose">
+        <h2>One Liner</h2>
+        {addon.oneLiner ? <p>{addon.oneLiner}</p> : <p>No one-liner in tkmm.config.</p>}
+
+        <h2>Description</h2>
+        {
+          paragraphs.length === 0 ? (
+            <p>No description in tkmm.config.</p>
+          ) : (
+            paragraphs.map((paragraph) => (
+              <p>{parts(paragraph).map((part, index) => (index % 2 === 1 ? <code>{part}</code> : part))}</p>
+            ))
+          )
+        }
+
+        <h2>Features</h2>
+        {
+          addon.features.length === 0 ? (
+            <p>No features in tkmm.config.</p>
+          ) : (
+            <ul>
+              {addon.features.map((feature) => (
+                <li>{parts(feature).map((part, index) => (index % 2 === 1 ? <code>{part}</code> : part))}</li>
+              ))}
+            </ul>
+          )
+        }
+
+        <h2>Commands</h2>
+        {
+          addon.commands.length === 0 ? (
+            <p>No commands in tkmm.config.</p>
+          ) : (
+            <ul>
+              {addon.commands.map((command) => (
+                <li>{parts(command).map((part, index) => (index % 2 === 1 ? <code>{part}</code> : part))}</li>
+              ))}
+            </ul>
+          )
+        }
+      </section>
+
+      <section>
+        <h2>Release notes</h2>
+      {
+        addon.releases.length === 0 ? (
+          <p>No release notes in RELEASE.md.</p>
+        ) : (
+          addon.releases.map((release) => (
+            <article class="release">
+              <h3>
+                {release.version}
+                {release.title && ` — ${release.title}`}
+                {release.date && <span class="when">{release.date}</span>}
+              </h3>
+              <ul>
+                {release.notes.map((note) => (
+                  <li>{note}</li>
+                ))}
+              </ul>
+            </article>
+          ))
+        )
+      }
+      </section>
+      </div>
+    </article>
+  </main>
+</Layout>

@@ -1,0 +1,17 @@
+---
+description: Every addon has a slash dev command that toggles WoWF.DevMode for the session
+alwaysApply: true
+---
+
+# Dev toggle command
+
+Every addon exposes `dev` on its slash command.
+
+- `/ml dev`, `/jm dev`, `/wd dev`, `/dn dev`, `/du dev`
+- `/tk dev` (from Common `DevMode.lua`) does the same. The flag is shared, so any of these toggles every addon.
+- No argument flips the current value. `on` and `off` set it.
+- Call `WoWF.ToggleDevMode(addonName, arg)` from Common `DevMode.lua`. Do not write a second toggle.
+- Each addon reacts in `WoWF.OnDevModeChanged(function(enabled) ... end)`: set its logger level and redraw its own dev-only UI. Do not do that work in the slash handler, or other addons' toggles will miss it.
+- The reply is magenta and says whether development mode is on or off.
+- The change lasts for the session. A reload restores the packaged flag.
+- When development mode turns off, hide dev-only controls and drop any space reserved for them. The window uses its normal margins again.

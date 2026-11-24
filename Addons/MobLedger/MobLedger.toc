@@ -1,0 +1,10 @@
+## Interface: 16001
+## Title: MobLedger
+## Version: 0.3.10
+## SavedVariables: MobLedgerDB
+
+Common\DevMode.lua
+Common\Logger.lua
+src\Main.lua
+src\MobLedger.lua
+src\MobLedgerJournal.lua

@@ -1,0 +1,560 @@
+:root {
+  color-scheme: dark;
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  color: #e8e3d6;
+  background: #17151a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 20px 24px;
+  gap: 16px;
+}
+
+.header h1 {
+  margin: 0 0 12px;
+  font-size: 22px;
+  color: #f2c14e;
+}
+
+.update-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 12px;
+  padding: 8px 12px;
+  border: 1px solid #c99a2e;
+  border-radius: 6px;
+  background: #2a2630;
+  color: #f2c14e;
+}
+
+.path-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.path-label {
+  color: #a39d8f;
+  white-space: nowrap;
+}
+
+.path {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #221f26;
+  font-family: Consolas, Menlo, monospace;
+  font-size: 12px;
+}
+
+.path.missing {
+  color: #e88b6a;
+  font-family: inherit;
+}
+
+button {
+  padding: 7px 16px;
+  border: 1px solid #4a4452;
+  border-radius: 6px;
+  background: #2a2630;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: #352f3c;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+button.primary {
+  border-color: #c99a2e;
+  background: #b8862a;
+  color: #1a1612;
+  font-weight: 600;
+}
+
+button.primary:hover:not(:disabled) {
+  background: #d29c33;
+}
+
+.list {
+  flex: 1;
+  overflow-y: auto;
+  border: 1px solid #2f2b35;
+  border-radius: 8px;
+  background: #1d1b21;
+}
+
+.entry {
+  border-bottom: 1px solid #26232b;
+}
+
+.entry:last-child {
+  border-bottom: none;
+}
+
+.entry.open,
+.entry:hover {
+  background: #24212a;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) 80px 150px 150px 200px;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.row:hover:not(.head),
+.row.focused {
+  background: #24212a;
+}
+
+.row:not(.head) {
+  cursor: pointer;
+}
+
+.row.head {
+  position: sticky;
+  top: 0;
+  border-bottom: 1px solid #26232b;
+  background: #1d1b21;
+  color: #a39d8f;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: default;
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+}
+
+.icon.placeholder {
+  background: #26232b;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.one-liner {
+  display: block;
+  height: 16px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #a39d8f;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+button.expand {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+}
+
+.chevron {
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 6px solid #a39d8f;
+}
+
+button.expand[aria-expanded="true"] .chevron {
+  transform: rotate(90deg);
+  border-left-color: #f2c14e;
+}
+
+.expand-panel {
+  padding: 0 16px 14px 98px;
+}
+
+.expand-panel h3 {
+  margin: 14px 0 6px;
+  color: #a39d8f;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.expand-panel p {
+  margin: 0;
+  line-height: 1.45;
+  max-width: 68ch;
+}
+
+.expand-panel p + p {
+  margin-top: 8px;
+}
+
+.features,
+.commands,
+.release-notes ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.features li,
+.commands li,
+.release-notes li {
+  margin: 4px 0;
+}
+
+.expand-panel code {
+  font-family: Consolas, Menlo, monospace;
+  font-size: 12px;
+}
+
+.prompt {
+  color: #a39d8f;
+}
+
+button.link {
+  display: inline-flex;
+  margin-top: 12px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #f2c14e;
+  font-weight: 600;
+}
+
+button.link:hover:not(:disabled) {
+  background: transparent;
+  color: #ffd978;
+}
+
+button.link.back {
+  margin-top: 0;
+}
+
+.releases {
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr);
+  gap: 18px;
+}
+
+.version-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+button.version {
+  width: 100%;
+  text-align: left;
+}
+
+button.version.on {
+  border-color: #c99a2e;
+  background: #b8862a;
+  color: #1a1612;
+  font-weight: 600;
+}
+
+.detail {
+  max-height: 180px;
+  overflow: auto;
+  padding: 14px 16px;
+  border: 1px solid #2f2b35;
+  border-radius: 8px;
+  background: #1d1b21;
+}
+
+.detail h2 {
+  margin: 0 0 4px;
+  font-size: 16px;
+}
+
+.detail-line {
+  margin: 0 0 10px;
+  color: #a39d8f;
+}
+
+.markdown p,
+.markdown ul {
+  margin: 0 0 8px;
+  line-height: 1.45;
+}
+
+.markdown p:last-child,
+.markdown ul:last-child {
+  margin-bottom: 0;
+}
+
+.markdown ul {
+  padding-left: 18px;
+}
+
+.markdown code {
+  font-family: Consolas, Menlo, monospace;
+  font-size: 12px;
+}
+
+.short {
+  margin-left: 6px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #2a2630;
+  color: #a39d8f;
+  font-size: 12px;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+.status.not-installed {
+  color: #a39d8f;
+}
+
+.status.update {
+  color: #f2c14e;
+}
+
+.status.current {
+  color: #7fc98f;
+}
+
+/* Installed version with its status label underneath. */
+.installed-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.installed-cell .status {
+  font-size: 12px;
+}
+
+.empty {
+  padding: 24px;
+  text-align: center;
+  color: #a39d8f;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.notice {
+  flex: 1;
+  margin: 0;
+  font-size: 13px;
+}
+
+.notice.ok {
+  color: #7fc98f;
+}
+
+.notice.error {
+  color: #e88b6a;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Sort buttons inside the list header: plain text that looks like the header labels. */
+.row.head .sort-head {
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+
+.row.head .sort-head:hover:not(:disabled) {
+  background: none;
+  color: #e8e3d6;
+}
+
+.row.head .sort-head.active {
+  color: #f2c14e;
+}
+
+.segmented {
+  display: inline-flex;
+  overflow: hidden;
+  border: 1px solid #4a4452;
+  border-radius: 6px;
+}
+
+.seg {
+  padding: 5px 12px;
+  border: none;
+  border-radius: 0;
+  background: #2a2630;
+}
+
+.seg + .seg {
+  border-left: 1px solid #4a4452;
+}
+
+.seg.active {
+  background: #b8862a;
+  color: #1a1612;
+  font-weight: 600;
+}
+
+.updated {
+  color: #a39d8f;
+  font-size: 13px;
+}
+
+.row-actions {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-start;
+}
+
+.row-btn {
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+/* Same width for every label, so the primary button's left edge lines up across rows. */
+.row-btn.primary {
+  min-width: 104px;
+  text-align: center;
+}
+
+/* The addon name and one-liner in the list; clicking opens the detail window. */
+.info-toggle {
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.info-toggle:hover:not(:disabled) {
+  background: none;
+}
+
+.info-toggle:hover .name {
+  color: #f2c14e;
+}
+
+/* Addon page: takes the space under the title and toolbar, in place of the list. */
+.addon-page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.addon-page-top {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.back-button {
+  padding: 6px 14px;
+}
+
+.addon-page-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.addon-page-header .icon {
+  width: 56px;
+  height: 56px;
+}
+
+/* Details on the left, screenshot on the right. */
+.addon-page-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.addon-page-body.single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (max-width: 760px) {
+  .addon-page-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.addon-shot {
+  margin: 0;
+}
+
+.addon-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid #2f2b35;
+  border-radius: 8px;
+}
+
+.addon-page-header .name {
+  color: #f2c14e;
+  font-size: 18px;
+  font-weight: 600;
+}

@@ -1,0 +1,48 @@
+---
+description: Every addon keeps a tkmm.config; the one-liner, description, features, and commands are read from it
+alwaysApply: true
+---
+
+# Addon listing — tkmm.config
+
+Every addon under `Addons/<Name>/` has a `tkmm.config`. TKMM and the site read the public name, one-liner, icon, description, features, and commands from this file. Do not invent those in TKMM or on the site, and do not put the one-liner, description, features, or commands in the TOC.
+
+## File
+
+```
+publicName: Junk Master
+oneLiner: Sells gray junk at vendors and keeps a ledger of what was sold.
+icon: icon.png
+
+---
+
+Gray items with a vendor price sell when you open a vendor.
+
+## Features
+
+- The ledger lists each sale and what it was worth.
+
+## Commands
+
+- `/jm` opens the ledger.
+```
+
+- `publicName`, `oneLiner`, and `icon` are single lines. `icon` is a path relative to the addon folder, usually `icon.png`.
+- `publicName` is the name players see. Spaces and punctuation are fine, including `?`. Leave it blank and the folder name is used. The folder name is the addon identity (`Addons/JunkMaster`, `JunkMaster.toc`) and cannot contain `\ / : * ? " < > |`.
+- `## Title` in the TOC is that same public name, so the game's addon list matches. When `publicName` is blank, `## Title` is the folder name.
+- `oneLiner` is one sentence. The detail page shows that sentence under the heading One Liner.
+- A line that is only `---` ends the header. The prose after it, up to the first `##` heading, is the description.
+- `## Features` lists what the player can do. `## Commands` lists the slash commands. Each item is a `- ` line. A bullet only counts when it sits under that heading.
+- Do not list `tkmm.config` in the TOC. The client loads only the files the TOC names.
+
+## TOC
+
+The TOC keeps what the client needs to load and version the addon:
+
+- `## Interface`
+- `## Title`
+- `## Version` (same value as `Main.lua`)
+- `## SavedVariables` when the addon saves
+- The load list
+
+Notes, author, category, and icon texture do not belong in the TOC.
