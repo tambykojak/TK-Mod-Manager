@@ -129,13 +129,26 @@ h1 {
   color: #a89f90;
 }
 
-.soon {
+.downloads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
   flex: none;
+}
+
+.download {
   padding: 8px 14px;
-  border: 1px solid #4a4452;
   border-radius: 6px;
-  color: #a89f90;
+  background: #f2c14e;
+  color: #1c191f;
   font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.download:hover {
+  background: #ffd978;
+  color: #1c191f;
 }
 
 .addon-list {

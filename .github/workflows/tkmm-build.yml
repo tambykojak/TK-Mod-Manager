@@ -6,6 +6,9 @@ on:
     tags:
       - "tkmm-v*"
 
+permissions:
+  contents: write
+
 jobs:
   build:
     strategy:
@@ -59,6 +62,25 @@ jobs:
           projectPath: TKMM
           args: ${{ matrix.args }}
           includeUpdaterJson: true
+
+      # Stable names so the website can link to the latest release without a version in the filename.
+      - name: Upload stable installer name
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          tag="${GITHUB_REF_NAME}"
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            src=$(find TKMM/src-tauri/target -type f -path '*/bundle/nsis/*-setup.exe' | head -n 1)
+            cp "$src" "$RUNNER_TEMP/TKMM-Setup.exe"
+            gh release upload "$tag" "$RUNNER_TEMP/TKMM-Setup.exe" --clobber
+          else
+            src=$(find TKMM/src-tauri/target -type f -path '*/bundle/dmg/*.dmg' | head -n 1)
+            cp "$src" "$RUNNER_TEMP/TKMM.dmg"
+            gh release upload "$tag" "$RUNNER_TEMP/TKMM.dmg" --clobber
+          fi
 
       - uses: actions/upload-artifact@v4
         with:
