@@ -61,6 +61,7 @@ jobs:
         with:
           projectPath: TKMM
           args: ${{ matrix.args }}
+          tagName: ${{ github.ref_type == 'tag' && github.ref_name || '' }}
           includeUpdaterJson: true
 
       # Stable names so the website can link to the latest release without a version in the filename.
