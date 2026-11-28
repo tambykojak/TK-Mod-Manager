@@ -14,6 +14,7 @@ import {
 import { AddonPage } from "./AddonDetail";
 import { findUpdate, installUpdate } from "./updater";
 import type { Update } from "@tauri-apps/plugin-updater";
+import { type Theme, applyTheme, loadTheme, saveTheme } from "./theme";
 
 type Status = "not-installed" | "update" | "current";
 type SortKey = "name" | "updated" | "action";
@@ -31,6 +32,11 @@ const STATUS_LABEL: Record<Status, string> = {
 };
 /** Action order: Update, then Installed (up to date), then Install. */
 const ACTION_RANK: Record<Status, number> = { update: 0, current: 1, "not-installed": 2 };
+
+const THEMES: { id: Theme; label: string }[] = [
+  { id: "dark", label: "Dark" },
+  { id: "light", label: "Light" },
+];
 
 type Notice = { kind: "ok" | "error"; text: string };
 
@@ -85,7 +91,15 @@ export default function App() {
   const [appUpdate, setAppUpdate] = useState<Update | null>(null);
   const [updatingApp, setUpdatingApp] = useState(false);
 
+  const [theme, setTheme] = useState<Theme>(loadTheme);
+
   const busy = busyName !== null;
+
+  const pickTheme = (next: Theme) => {
+    setTheme(next);
+    applyTheme(next);
+    saveTheme(next);
+  };
 
   useEffect(() => {
     findUpdate().then(setAppUpdate);
@@ -221,9 +235,27 @@ export default function App() {
   return (
     <main className="app">
       <header className="header">
-        <h1>
-          TK's Mod Manager <span className="short">TKMM</span>
-        </h1>
+        <div className="header-top">
+          <h1>
+            TK's Mod Manager <span className="short">TKMM</span>
+          </h1>
+          <div className="theme-toggle">
+            <span className="path-label">Theme</span>
+            <div className="segmented" role="group" aria-label="Color theme">
+              {THEMES.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  className={theme === item.id ? "seg active" : "seg"}
+                  aria-pressed={theme === item.id}
+                  onClick={() => pickTheme(item.id)}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
         {appUpdate && (
           <div className="update-banner">
             <span>TK's Mod Manager {appUpdate.version} is available.</span>
