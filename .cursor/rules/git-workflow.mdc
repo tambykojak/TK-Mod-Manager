@@ -24,7 +24,7 @@ If the folder has uncommitted work that is not this change, stop. Do not switch 
 
 Once a change is made:
 
-1. One prompt, one commit. Wait for steering, then commit. The subject is imperative and says why, in one or two sentences: `Sell grey junk in one vendor pass.` Put the prompt in the commit message.
+1. One prompt, one commit. Steering stays in that commit. A follow-up is its own commit. The subject is imperative and says why, in one or two sentences: `Sell grey junk in one vendor pass.` Put the prompt in the commit message.
 2. Rebase onto `origin/main` when the branch is behind. If the rebase conflicts, stop and name the files.
 3. Push with `git push -fu origin HEAD`. If a pull request is not already created, create it in draft. The title matches the commit. The body says what a player or the app can do now, and how to check it.
 
