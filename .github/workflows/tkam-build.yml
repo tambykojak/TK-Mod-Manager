@@ -1,10 +1,10 @@
-name: TKMM build
+name: TKAM build
 
 on:
   workflow_dispatch:
   push:
     tags:
-      - "tkmm-v*"
+      - "tkam-v*"
 
 permissions:
   contents: write
@@ -37,7 +37,7 @@ jobs:
 
       - uses: swatinem/rust-cache@v2
         with:
-          workspaces: TKMM/src-tauri -> target
+          workspaces: TKAM/src-tauri -> target
 
       # The addon build script needs bash 4+ (mapfile); macOS ships 3.2.
       - name: Install bash (macOS)
@@ -45,13 +45,13 @@ jobs:
         run: brew install bash
 
       - name: Install dependencies
-        working-directory: TKMM
+        working-directory: TKAM
         run: npm install
 
       - name: Build addons into Outputs/
-        working-directory: TKMM
+        working-directory: TKAM
         env:
-          TKMM_BASH: ${{ matrix.bash }}
+          TKAM_BASH: ${{ matrix.bash }}
         run: npm run bundle-addons
 
       - uses: tauri-apps/tauri-action@v0
@@ -59,7 +59,7 @@ jobs:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         with:
-          projectPath: TKMM
+          projectPath: TKAM
           args: ${{ matrix.args }}
           tagName: ${{ github.ref_type == 'tag' && github.ref_name || '' }}
           includeUpdaterJson: true
@@ -74,16 +74,16 @@ jobs:
           set -euo pipefail
           tag="${GITHUB_REF_NAME}"
           if [ "$RUNNER_OS" = "Windows" ]; then
-            src=$(find TKMM/src-tauri/target -type f -path '*/bundle/nsis/*-setup.exe' | head -n 1)
-            cp "$src" "$RUNNER_TEMP/TKMM-Setup.exe"
-            gh release upload "$tag" "$RUNNER_TEMP/TKMM-Setup.exe" --clobber
+            src=$(find TKAM/src-tauri/target -type f -path '*/bundle/nsis/*-setup.exe' | head -n 1)
+            cp "$src" "$RUNNER_TEMP/TKAM-Setup.exe"
+            gh release upload "$tag" "$RUNNER_TEMP/TKAM-Setup.exe" --clobber
           else
-            src=$(find TKMM/src-tauri/target -type f -path '*/bundle/dmg/*.dmg' | head -n 1)
-            cp "$src" "$RUNNER_TEMP/TKMM.dmg"
-            gh release upload "$tag" "$RUNNER_TEMP/TKMM.dmg" --clobber
+            src=$(find TKAM/src-tauri/target -type f -path '*/bundle/dmg/*.dmg' | head -n 1)
+            cp "$src" "$RUNNER_TEMP/TKAM.dmg"
+            gh release upload "$tag" "$RUNNER_TEMP/TKAM.dmg" --clobber
           fi
 
       - uses: actions/upload-artifact@v4
         with:
-          name: tkmm-${{ matrix.platform }}
-          path: TKMM/src-tauri/target/**/release/bundle/
+          name: tkam-${{ matrix.platform }}
+          path: TKAM/src-tauri/target/**/release/bundle/

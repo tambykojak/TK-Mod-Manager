@@ -1,11 +1,11 @@
 // Builds every workspace addon into Outputs/ (production, DevMode off) so
 // tauri.conf.json can bundle that folder as the app's "addons" resource.
-// Also writes Outputs/tkmm-manifest.json with each addon's last-changed time
+// Also writes Outputs/tkam-manifest.json with each addon's last-changed time
 // (newest file mtime under Addons/<name>, in Unix seconds).
 //
 // Env:
-//   TKMM_BASH=<path>         bash 4+ to run the build script (default: bash)
-//   TKMM_SKIP_ADDON_BUILD=1  reuse the existing Outputs/ as-is
+//   TKAM_BASH=<path>         bash 4+ to run the build script (default: bash)
+//   TKAM_SKIP_ADDON_BUILD=1  reuse the existing Outputs/ as-is
 
 import { spawnSync } from "node:child_process";
 import { existsSync, readdirSync, statSync, writeFileSync } from "node:fs";
@@ -17,8 +17,8 @@ const workspaceRoot = resolve(here, "..", "..");
 const outputsDir = resolve(workspaceRoot, "Outputs");
 const addonsSourceDir = resolve(workspaceRoot, "Addons");
 
-if (process.env.TKMM_SKIP_ADDON_BUILD !== "1") {
-  const bash = process.env.TKMM_BASH || "bash";
+if (process.env.TKAM_SKIP_ADDON_BUILD !== "1") {
+  const bash = process.env.TKAM_BASH || "bash";
   const result = spawnSync(bash, ["Scripts/wowf-addons-build.sh", "--all"], {
     cwd: workspaceRoot,
     stdio: "inherit",
@@ -28,7 +28,7 @@ if (process.env.TKMM_SKIP_ADDON_BUILD !== "1") {
     console.error(
       `Could not run "${bash}": ${result.error.message}\n` +
         "Install Git Bash or WSL (Windows) or bash 4+ (macOS: brew install bash), " +
-        "or point TKMM_BASH at one.",
+        "or point TKAM_BASH at one.",
     );
     process.exit(1);
   }
@@ -68,6 +68,6 @@ for (const name of addons) {
     manifest[name] = newestMtime(source);
   }
 }
-writeFileSync(join(outputsDir, "tkmm-manifest.json"), JSON.stringify(manifest, null, 2));
+writeFileSync(join(outputsDir, "tkam-manifest.json"), JSON.stringify(manifest, null, 2));
 
 console.log(`Bundling ${addons.length} addons: ${addons.join(", ")}`);

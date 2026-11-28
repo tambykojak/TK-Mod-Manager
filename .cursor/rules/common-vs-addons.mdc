@@ -7,7 +7,7 @@
 | `Common/` | First-party shared source — **not** a standalone game AddOn |
 | `Common/UI/` | First-party shared window and widget helpers (`WoWF.UI`) |
 | `Libs/` | Third-party vendored packages — **filenames never renamed** on package |
-| `Addons/<Name>/` | Addon root — TOC, `tkmm.config`, `RELEASE.md`, icons. Code is in `src/` |
+| `Addons/<Name>/` | Addon root — TOC, `tkam.config`, `RELEASE.md`, icons. Code is in `src/` |
 | `Scripts/` | Dev tooling only |
 
 ## Addon startup
@@ -62,7 +62,7 @@ Interface/AddOns/JunkMaster/
 - Put logic in `Common/` when it can reasonably be shared across addons (first-party).
 - Put window and widget helpers in `Common/UI/`.
 - Put third-party libraries in `Libs/<PackageName>/`.
-- Put code in `Addons/<Name>/src/` when it is specific to that addon’s TOC, slash commands, or feature surface. Leave the TOC, `tkmm.config`, `RELEASE.md`, and icons at the addon root.
+- Put code in `Addons/<Name>/src/` when it is specific to that addon’s TOC, slash commands, or feature surface. Leave the TOC, `tkam.config`, `RELEASE.md`, and icons at the addon root.
 
 ## When unsure — ask
 

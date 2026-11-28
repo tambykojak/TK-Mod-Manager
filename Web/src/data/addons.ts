@@ -131,7 +131,7 @@ export function loadAddons(): Addon[] {
     .map((entry) => {
       const name = entry.name;
       const dir = resolve(addonsDir, name);
-      const configPath = resolve(dir, "tkmm.config");
+      const configPath = resolve(dir, "tkam.config");
       const releasePath = resolve(dir, "RELEASE.md");
       const config = existsSync(configPath)
         ? parseConfig(readFileSync(configPath, "utf8"))

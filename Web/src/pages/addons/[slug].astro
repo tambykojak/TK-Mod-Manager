@@ -18,7 +18,7 @@ function parts(text: string) {
 }
 ---
 
-<Layout title={`${addon.publicName} — TK's Mod Manager`} description={addon.oneLiner || addon.publicName} wide>
+<Layout title={`${addon.publicName} — TK's Addon Manager`} description={addon.oneLiner || addon.publicName} wide>
   <main class="wide">
     <p><a href="/">All addons</a></p>
     <article class:list={["card", { "addon-sheet": addon.screenshot }]}>
@@ -42,12 +42,12 @@ function parts(text: string) {
       <div class="addon-copy">
       <section class="prose">
         <h2>One Liner</h2>
-        {addon.oneLiner ? <p>{addon.oneLiner}</p> : <p>No one-liner in tkmm.config.</p>}
+        {addon.oneLiner ? <p>{addon.oneLiner}</p> : <p>No one-liner in tkam.config.</p>}
 
         <h2>Description</h2>
         {
           paragraphs.length === 0 ? (
-            <p>No description in tkmm.config.</p>
+            <p>No description in tkam.config.</p>
           ) : (
             paragraphs.map((paragraph) => (
               <p>{parts(paragraph).map((part, index) => (index % 2 === 1 ? <code>{part}</code> : part))}</p>
@@ -58,7 +58,7 @@ function parts(text: string) {
         <h2>Features</h2>
         {
           addon.features.length === 0 ? (
-            <p>No features in tkmm.config.</p>
+            <p>No features in tkam.config.</p>
           ) : (
             <ul>
               {addon.features.map((feature) => (
@@ -71,7 +71,7 @@ function parts(text: string) {
         <h2>Commands</h2>
         {
           addon.commands.length === 0 ? (
-            <p>No commands in tkmm.config.</p>
+            <p>No commands in tkam.config.</p>
           ) : (
             <ul>
               {addon.commands.map((command) => (

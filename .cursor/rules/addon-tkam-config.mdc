@@ -1,11 +1,11 @@
 ---
-description: Every addon keeps a tkmm.config; the one-liner, description, features, and commands are read from it
+description: Every addon keeps a tkam.config; the one-liner, description, features, and commands are read from it
 alwaysApply: true
 ---
 
-# Addon listing — tkmm.config
+# Addon listing — tkam.config
 
-Every addon under `Addons/<Name>/` has a `tkmm.config`. TKMM and the site read the public name, one-liner, icon, description, features, and commands from this file. Do not invent those in TKMM or on the site, and do not put the one-liner, description, features, or commands in the TOC.
+Every addon under `Addons/<Name>/` has a `tkam.config`. TKAM and the site read the public name, one-liner, icon, description, features, and commands from this file. Do not invent those in TKAM or on the site, and do not put the one-liner, description, features, or commands in the TOC.
 
 ## File
 
@@ -33,7 +33,7 @@ Gray items with a vendor price sell when you open a vendor.
 - `oneLiner` is one sentence. The detail page shows that sentence under the heading One Liner.
 - A line that is only `---` ends the header. The prose after it, up to the first `##` heading, is the description.
 - `## Features` lists what the player can do. `## Commands` lists the slash commands. Each item is a `- ` line. A bullet only counts when it sits under that heading.
-- Do not list `tkmm.config` in the TOC. The client loads only the files the TOC names.
+- Do not list `tkam.config` in the TOC. The client loads only the files the TOC names.
 
 ## TOC
 

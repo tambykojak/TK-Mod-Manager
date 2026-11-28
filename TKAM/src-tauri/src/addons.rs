@@ -12,20 +12,20 @@ const GAME_DIR: &str = "World of Warcraft";
 #[serde(rename_all = "camelCase")]
 pub struct AddonInfo {
     name: String,
-    /// From `publicName` in `tkmm.config`. The folder name when that line is blank.
+    /// From `publicName` in `tkam.config`. The folder name when that line is blank.
     public_name: String,
     version: Option<String>,
-    /// One sentence from `oneLiner` in `tkmm.config`.
+    /// One sentence from `oneLiner` in `tkam.config`.
     one_liner: Option<String>,
-    /// Prose after `---` in `tkmm.config`, before the section headings.
+    /// Prose after `---` in `tkam.config`, before the section headings.
     description: Option<String>,
-    /// Bullets under `## Features` in `tkmm.config`, in file order.
+    /// Bullets under `## Features` in `tkam.config`, in file order.
     features: Vec<String>,
-    /// Bullets under `## Commands` in `tkmm.config`, in file order.
+    /// Bullets under `## Commands` in `tkam.config`, in file order.
     commands: Vec<String>,
-    /// Release notes, newest first, as written in `tkmm.config`.
+    /// Release notes, newest first, as written in `tkam.config`.
     releases: Vec<ReleaseNote>,
-    /// Absolute path to the icon named in `tkmm.config`, when that file exists.
+    /// Absolute path to the icon named in `tkam.config`, when that file exists.
     icon_path: Option<String>,
     /// Absolute path to `screenshot.png` in the addon folder, when that file exists.
     screenshot_path: Option<String>,
@@ -65,9 +65,9 @@ pub fn list_bundled_addons(app: AppHandle) -> Result<Vec<AddonInfo>, String> {
     Ok(addons)
 }
 
-/// `tkmm-manifest.json` written by the build step: addon name -> last-changed Unix seconds.
+/// `tkam-manifest.json` written by the build step: addon name -> last-changed Unix seconds.
 fn read_manifest(root: &Path) -> HashMap<String, u64> {
-    fs::read_to_string(root.join("tkmm-manifest.json"))
+    fs::read_to_string(root.join("tkam-manifest.json"))
         .ok()
         .and_then(|text| serde_json::from_str(&text).ok())
         .unwrap_or_default()
@@ -175,7 +175,7 @@ fn install_one(source_root: &Path, target_root: &Path, name: &str) -> Result<(),
     validate_name(name)?;
     let src = source_root.join(name);
     if !src.is_dir() {
-        return Err("Not bundled with this version of TKMM".into());
+        return Err("Not bundled with this version of TKAM".into());
     }
 
     let dest = target_root.join(name);
@@ -257,7 +257,7 @@ fn read_addon_dirs(root: &Path) -> Result<Vec<AddonInfo>, String> {
                 return None;
             }
             let version = read_version(&entry.path(), &name);
-            let config = read_tkmm_config(&entry.path());
+            let config = read_tkam_config(&entry.path());
             let public_name = config
                 .public_name
                 .filter(|value| !value.trim().is_empty())
@@ -288,7 +288,7 @@ fn read_addon_dirs(root: &Path) -> Result<Vec<AddonInfo>, String> {
 }
 
 /// `## Version` from `<name>.toc`, or the first `.toc` in the folder.
-/// Public name, one-liner, icon, description, features, and commands come from `tkmm.config`.
+/// Public name, one-liner, icon, description, features, and commands come from `tkam.config`.
 fn read_version(dir: &Path, name: &str) -> Option<String> {
     let preferred = dir.join(format!("{name}.toc"));
     let toc = if preferred.is_file() {
@@ -322,9 +322,9 @@ fn read_version(dir: &Path, name: &str) -> Option<String> {
     None
 }
 
-/// Parsed `tkmm.config`. Missing keys stay empty.
+/// Parsed `tkam.config`. Missing keys stay empty.
 #[derive(Default)]
-struct TkmmConfig {
+struct TkamConfig {
     public_name: Option<String>,
     one_liner: Option<String>,
     icon: Option<String>,
@@ -334,16 +334,16 @@ struct TkmmConfig {
     releases: Vec<ReleaseNote>,
 }
 
-fn read_tkmm_config(dir: &Path) -> TkmmConfig {
-    fs::read_to_string(dir.join("tkmm.config"))
-        .map(|text| parse_tkmm_config(&text))
+fn read_tkam_config(dir: &Path) -> TkamConfig {
+    fs::read_to_string(dir.join("tkam.config"))
+        .map(|text| parse_tkam_config(&text))
         .unwrap_or_default()
 }
 
 /// Header lines are `key: value` until a line that is only `---`.
 /// The body is the description, then `## Features` and `## Commands`.
 /// Any other `## ` heading starts a release, and its `- ` lines are that version's notes.
-fn parse_tkmm_config(text: &str) -> TkmmConfig {
+fn parse_tkam_config(text: &str) -> TkamConfig {
     let text = text.strip_prefix('\u{feff}').unwrap_or(text);
     let mut public_name = None;
     let mut one_liner = None;
@@ -377,7 +377,7 @@ fn parse_tkmm_config(text: &str) -> TkmmConfig {
 
     let (description, features, commands, releases) = parse_about_body(&body.join("\n"));
 
-    TkmmConfig {
+    TkamConfig {
         public_name,
         one_liner,
         icon,
@@ -493,7 +493,7 @@ fn resolve_icon(dir: &Path, icon: &str) -> Option<String> {
 
 #[cfg(test)]
 mod tests {
-    use super::parse_tkmm_config;
+    use super::parse_tkam_config;
 
     #[test]
     fn parses_header_and_markdown_body() {
@@ -515,7 +515,7 @@ Sells gray items.
 
 - `/jm` opens the ledger.
 ";
-        let cfg = parse_tkmm_config(text);
+        let cfg = parse_tkam_config(text);
         assert_eq!(cfg.public_name.as_deref(), Some("JunkMaster"));
         assert_eq!(cfg.one_liner.as_deref(), Some("Sells junk."));
         assert_eq!(cfg.icon.as_deref(), Some("icon.png"));
@@ -549,7 +549,7 @@ Sells gray items.
 ## 0.3.2
 - First ledger
 ";
-        let cfg = parse_tkmm_config(text);
+        let cfg = parse_tkam_config(text);
         assert_eq!(cfg.features, vec!["Keeps a ledger".to_string()]);
         assert_eq!(cfg.commands, vec!["`/jm` opens the ledger.".to_string()]);
         assert_eq!(cfg.releases.len(), 2);
@@ -564,9 +564,9 @@ Sells gray items.
 
     #[test]
     fn missing_separator_has_no_description() {
-        let cfg = parse_tkmm_config("publicName: Wen Ding?\n");
+        let cfg = parse_tkam_config("publicName: Wen Ding?\n");
         assert_eq!(cfg.public_name.as_deref(), Some("Wen Ding?"));
-        let blank = parse_tkmm_config("publicName:\n");
+        let blank = parse_tkam_config("publicName:\n");
         assert!(blank.public_name.is_none());
         assert!(cfg.description.is_none());
         assert!(cfg.features.is_empty());
@@ -589,7 +589,7 @@ Sells gray items.
 
 - A feature
 ";
-        let cfg = parse_tkmm_config(text);
+        let cfg = parse_tkam_config(text);
         assert_eq!(
             cfg.description.as_deref(),
             Some("Sells gray items.\n\nNot a feature")

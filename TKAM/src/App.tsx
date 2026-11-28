@@ -222,11 +222,11 @@ export default function App() {
     <main className="app">
       <header className="header">
         <h1>
-          TK's Mod Manager <span className="short">TKMM</span>
+          TK's Addon Manager <span className="short">TKAM</span>
         </h1>
         {appUpdate && (
           <div className="update-banner">
-            <span>TK's Mod Manager {appUpdate.version} is available.</span>
+            <span>TK's Addon Manager {appUpdate.version} is available.</span>
             <button type="button" className="primary" onClick={updateApp} disabled={updatingApp}>
               {updatingApp ? "Installing..." : "Install and restart"}
             </button>

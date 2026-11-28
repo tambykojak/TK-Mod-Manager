@@ -12,7 +12,7 @@ This standing instruction is the ask. Do not wait for another "commit" or "open 
 Before the first edit:
 
 1. Fetch `origin`. If this folder is on a clean `main`, pull.
-2. If this change already has a branch, stay on it. Otherwise branch from `origin/main`. Name it `addon/<name>/<short>`, `tkmm/<short>`, `web/<short>`, or `fix/<short>`.
+2. If this change already has a branch, stay on it. Otherwise branch from `origin/main`. Name it `addon/<name>/<short>`, `tkam/<short>`, `web/<short>`, or `fix/<short>`.
 3. Edit on that branch.
 
 A question or a plan does not get a branch. A change that spans turns stays on its branch. Unrelated addon, site, and app work each get their own branch.
@@ -32,12 +32,12 @@ Do not merge a change that is unfinished.
 
 ## Parallel agents
 
-Two agents do not both edit `Common/`, `Libs/`, `Scripts/`, `TKMM/`, `Web/`, or the same addon. The one that finishes second rebases before merging. An overlap stays on its branch.
+Two agents do not both edit `Common/`, `Libs/`, `Scripts/`, `TKAM/`, `Web/`, or the same addon. The one that finishes second rebases before merging. An overlap stays on its branch.
 
 ## Still ask first
 
-- Do not bump `VERSION` or create a `tkmm-v*` tag unless asked. A player-facing addon change still includes its `RELEASE.md` note, using the version already in `Main.lua`.
+- Do not bump `VERSION` or create a `tkam-v*` tag unless asked. A player-facing addon change still includes its `RELEASE.md` note, using the version already in `Main.lua`.
 - Do not force-push `main`, hard-reset, or skip hooks.
 - Leave out secrets, signing keys, `node_modules`, Rust `target`, `dist`, and Terraform state.
 
-`TKMM/` or `Web/` needs `npm install` before you run it. An addon change does not. If the push or merge fails, stop and say what blocked it.
+`TKAM/` or `Web/` needs `npm install` before you run it. An addon change does not. If the push or merge fails, stop and say what blocked it.
