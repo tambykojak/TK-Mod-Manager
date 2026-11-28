@@ -36,5 +36,5 @@ fn main() {
             addons::uninstall_addons,
         ])
         .run(tauri::generate_context!())
-        .expect("error while running TK's Mod Manager");
+        .expect("error while running TK's Addon Manager");
 }

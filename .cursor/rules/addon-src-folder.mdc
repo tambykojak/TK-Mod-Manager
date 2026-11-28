@@ -10,7 +10,7 @@ Every addon under `Addons/<Name>/` keeps its code in `src/`. Configuration and m
 ## Root
 
 - `<Name>.toc`
-- `tkmm.config`
+- `tkam.config`
 - `RELEASE.md`
 - Icons and other media (`icon.png`, `icon.tga`)
 
@@ -20,7 +20,7 @@ Every addon under `Addons/<Name>/` keeps its code in `src/`. Configuration and m
 - Feature scripts (`JunkMaster.lua`, `JunkMasterPanel.lua`, …)
 - Addon XML, when an addon has any
 
-Do not put the TOC, `tkmm.config`, `RELEASE.md`, or icons inside `src/`.
+Do not put the TOC, `tkam.config`, `RELEASE.md`, or icons inside `src/`.
 
 Packaging copies workspace `Common/` to `Common/` beside `src/`. `Libs/` is copied the same way. Do not rename those files, do not put them inside `src/`, and do not copy them into the workspace addon by hand.
 
@@ -42,7 +42,7 @@ src\JunkMaster.lua
 ```
 Addons/JunkMaster/
   JunkMaster.toc
-  tkmm.config
+  tkam.config
   RELEASE.md
   icon.png
   src/

@@ -1,7 +1,7 @@
 [package]
-name = "tkmm"
+name = "tkam"
 version = "0.1.0"
-description = "TK's Mod Manager (TKMM) - installs WoW Forever addons"
+description = "TK's Addon Manager (TKAM) - installs WoW Forever addons"
 edition = "2021"
 
 [build-dependencies]

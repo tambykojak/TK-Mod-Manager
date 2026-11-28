@@ -41,7 +41,7 @@ export function AddonDetail({ addon }: { addon: AddonInfo }) {
           <div>
             <h3>Release notes</h3>
             {addon.releases.length === 0 ? (
-              <p className="prompt">No release notes in tkmm.config.</p>
+              <p className="prompt">No release notes in tkam.config.</p>
             ) : (
               <ul className="version-list">
                 {addon.releases.map((item) => (
@@ -84,13 +84,13 @@ export function AddonDetail({ addon }: { addon: AddonInfo }) {
       {addon.oneLiner ? (
         <p>{addon.oneLiner}</p>
       ) : (
-        <p className="prompt">No one-liner in tkmm.config.</p>
+        <p className="prompt">No one-liner in tkam.config.</p>
       )}
       <h3>Description</h3>
       {paragraphs.length > 0 ? (
         paragraphs.map((paragraph, index) => <p key={index}>{inlineMarkdown(paragraph)}</p>)
       ) : (
-        <p className="prompt">No description in tkmm.config.</p>
+        <p className="prompt">No description in tkam.config.</p>
       )}
       <h3>Features</h3>
       {addon.features.length > 0 ? (
@@ -100,7 +100,7 @@ export function AddonDetail({ addon }: { addon: AddonInfo }) {
           ))}
         </ul>
       ) : (
-        <p className="prompt">No features in tkmm.config.</p>
+        <p className="prompt">No features in tkam.config.</p>
       )}
       <h3>Commands</h3>
       {commands.length > 0 ? (
@@ -110,7 +110,7 @@ export function AddonDetail({ addon }: { addon: AddonInfo }) {
           ))}
         </ul>
       ) : (
-        <p className="prompt">No commands in tkmm.config.</p>
+        <p className="prompt">No commands in tkam.config.</p>
       )}
       <button type="button" className="link" onClick={() => setView("releases")}>
         Release notes
