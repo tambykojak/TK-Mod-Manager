@@ -1,0 +1,8 @@
+---
+description: Check out a new branch in the working tree after creating it
+alwaysApply: true
+---
+
+# Check out the branch
+
+After you create a branch, check that branch out in the working tree. The environment is on the new branch.
