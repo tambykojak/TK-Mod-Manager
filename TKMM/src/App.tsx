@@ -12,6 +12,7 @@ import {
   uninstallAddons,
 } from "./api";
 import { AddonPage } from "./AddonDetail";
+import { SettingsPage } from "./Settings";
 import { findUpdate, installUpdate } from "./updater";
 import type { Update } from "@tauri-apps/plugin-updater";
 
@@ -82,6 +83,7 @@ export default function App() {
   const [busyName, setBusyName] = useState<string | null>(null);
   const [notice, setNotice] = useState<Notice | null>(null);
   const [openName, setOpenName] = useState<string | null>(null);
+  const [showSettings, setShowSettings] = useState(false);
   const [appUpdate, setAppUpdate] = useState<Update | null>(null);
   const [updatingApp, setUpdatingApp] = useState(false);
 
@@ -221,9 +223,21 @@ export default function App() {
   return (
     <main className="app">
       <header className="header">
-        <h1>
-          TK's Mod Manager <span className="short">TKMM</span>
-        </h1>
+        <div className="title-row">
+          <h1>
+            TK's Mod Manager <span className="short">TKMM</span>
+          </h1>
+          {!showSettings && (
+            <button
+              type="button"
+              className="settings-button"
+              onClick={() => setShowSettings(true)}
+              title="Settings"
+            >
+              Settings
+            </button>
+          )}
+        </div>
         {appUpdate && (
           <div className="update-banner">
             <span>TK's Mod Manager {appUpdate.version} is available.</span>
@@ -232,7 +246,7 @@ export default function App() {
             </button>
           </div>
         )}
-        {!openAddon && (
+        {!openAddon && !showSettings && (
           <div className="path-row">
             <span className="path-label">AddOns folder</span>
             <span className={addonsPath ? "path" : "path missing"} title={addonsPath ?? undefined}>
@@ -245,7 +259,7 @@ export default function App() {
         )}
       </header>
 
-      {!openAddon && (
+      {!openAddon && !showSettings && (
       <div className="toolbar">
         <span className="path-label">Show</span>
         <div className="segmented" role="group" aria-label="Filter addons">
@@ -264,7 +278,9 @@ export default function App() {
       </div>
       )}
 
-      {openAddon ? (
+      {showSettings ? (
+        <SettingsPage onBack={() => setShowSettings(false)} />
+      ) : openAddon ? (
         <AddonPage addon={openAddon} onBack={() => setOpenName(null)} />
       ) : (
       <section className="list">
