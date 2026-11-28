@@ -12,8 +12,8 @@ This standing instruction is the ask. Do not wait for another "commit" or "open 
 Before the first edit:
 
 1. Fetch `origin`. If this folder is on a clean `main`, pull.
-2. A new agent runs `git checkout -b BRANCH_NAME origin/main`. That creates the branch and checks it out. `BRANCH_NAME` is `addon/<name>/<short>`, `tkam/<short>`, `web/<short>`, or `fix/<short>`.
-3. Then run `git push -fu origin HEAD` or `git push -fu origin BRANCH_NAME`. The new branch must be on the remote.
+2. A new agent runs `git checkout -b tambykojak/FOLDER/<short> origin/main`. That creates the branch and checks it out. `FOLDER` is the addon folder name when the change is one addon. Use `Addons` for `Common`, `Libs`, or more than one addon. Use `tkam` for the Windows app, `tkam.com` for the web app, and `tkam` when both change.
+3. Then run `git push -fu origin HEAD` or `git push -fu origin tambykojak/FOLDER/<short>`. The new branch must be on the remote.
 4. Edit on that branch.
 
 A question or a plan does not get a branch. A change that spans turns stays on its branch. Unrelated addon, site, and app work each get their own branch.
