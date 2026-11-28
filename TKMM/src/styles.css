@@ -45,6 +45,75 @@
   --ok: #2f7d44;
 }
 
+:root[data-theme="midnight"] {
+  color-scheme: dark;
+  --text: #dfe6f5;
+  --bg: #0d1424;
+  --muted: #8d9bb8;
+  --accent: #7fb2ff;
+  --accent-hover: #a8c9ff;
+  --surface: #1a2540;
+  --surface-hover: #22304f;
+  --border: #35466b;
+  --border-soft: #22304d;
+  --divider: #1b2742;
+  --panel: #111a2e;
+  --panel-hover: #18233c;
+  --input: #15203a;
+  --primary: #3f6fc4;
+  --primary-border: #5a86d8;
+  --primary-hover: #5079d0;
+  --on-primary: #f4f8ff;
+  --warn: #f09a7a;
+  --ok: #7fd3a0;
+}
+
+:root[data-theme="forest"] {
+  color-scheme: dark;
+  --text: #e2ead9;
+  --bg: #131b15;
+  --muted: #98a894;
+  --accent: #9fd47a;
+  --accent-hover: #bfe59c;
+  --surface: #1f2b22;
+  --surface-hover: #283729;
+  --border: #3d5240;
+  --border-soft: #29382c;
+  --divider: #1d291f;
+  --panel: #18221a;
+  --panel-hover: #202d22;
+  --input: #1a251c;
+  --primary: #5f8f3a;
+  --primary-border: #77a84c;
+  --primary-hover: #6d9f43;
+  --on-primary: #101809;
+  --warn: #e39a64;
+  --ok: #8fd38a;
+}
+
+:root[data-theme="sepia"] {
+  color-scheme: light;
+  --text: #3d2e1c;
+  --bg: #f1e6cf;
+  --muted: #7d6a50;
+  --accent: #7a4a1e;
+  --accent-hover: #5c3614;
+  --surface: #fbf5e6;
+  --surface-hover: #ebdcc0;
+  --border: #c9b68f;
+  --border-soft: #dccba9;
+  --divider: #e3d4b5;
+  --panel: #f8f0dc;
+  --panel-hover: #efe2c6;
+  --input: #e8dbbd;
+  --primary: #c98a3c;
+  --primary-border: #a86f26;
+  --primary-hover: #b77b30;
+  --on-primary: #2a1a08;
+  --warn: #a9432a;
+  --ok: #4f7a3a;
+}
+
 :root {
   font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 14px;
@@ -612,8 +681,97 @@ button.version.on {
   gap: 16px;
 }
 
-.theme-toggle {
+.icon-button {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  color: var(--muted);
+}
+
+.icon-button:hover:not(:disabled) {
+  color: var(--text);
+}
+
+.settings-button {
+  flex: none;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgb(0 0 0 / 45%);
+  z-index: 10;
+}
+
+.modal {
+  width: min(440px, 100%);
+  padding: 18px 20px 20px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel);
+  box-shadow: 0 16px 48px rgb(0 0 0 / 35%);
+}
+
+.modal-head {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.modal-head h2 {
+  margin: 0;
+  font-size: 18px;
+  color: var(--accent);
+}
+
+.setting h3 {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
   gap: 10px;
+}
+
+.theme-option {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  padding: 8px;
+  text-align: left;
+}
+
+.theme-option.active {
+  border-color: var(--primary-border);
+  box-shadow: 0 0 0 1px var(--primary-border);
+}
+
+.theme-swatch {
+  position: relative;
+  display: block;
+  height: 46px;
+  border: 1px solid var(--border-soft);
+  border-radius: 5px;
+}
+
+.theme-swatch-dot {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
 }

@@ -15,6 +15,7 @@ import { AddonPage } from "./AddonDetail";
 import { findUpdate, installUpdate } from "./updater";
 import type { Update } from "@tauri-apps/plugin-updater";
 import { type Theme, applyTheme, loadTheme, saveTheme } from "./theme";
+import { GearIcon, SettingsDialog } from "./SettingsDialog";
 
 type Status = "not-installed" | "update" | "current";
 type SortKey = "name" | "updated" | "action";
@@ -32,11 +33,6 @@ const STATUS_LABEL: Record<Status, string> = {
 };
 /** Action order: Update, then Installed (up to date), then Install. */
 const ACTION_RANK: Record<Status, number> = { update: 0, current: 1, "not-installed": 2 };
-
-const THEMES: { id: Theme; label: string }[] = [
-  { id: "dark", label: "Dark" },
-  { id: "light", label: "Light" },
-];
 
 type Notice = { kind: "ok" | "error"; text: string };
 
@@ -92,6 +88,7 @@ export default function App() {
   const [updatingApp, setUpdatingApp] = useState(false);
 
   const [theme, setTheme] = useState<Theme>(loadTheme);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const busy = busyName !== null;
 
@@ -100,6 +97,8 @@ export default function App() {
     applyTheme(next);
     saveTheme(next);
   };
+
+  const closeSettings = useCallback(() => setSettingsOpen(false), []);
 
   useEffect(() => {
     findUpdate().then(setAppUpdate);
@@ -239,22 +238,15 @@ export default function App() {
           <h1>
             TK's Mod Manager <span className="short">TKMM</span>
           </h1>
-          <div className="theme-toggle">
-            <span className="path-label">Theme</span>
-            <div className="segmented" role="group" aria-label="Color theme">
-              {THEMES.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  className={theme === item.id ? "seg active" : "seg"}
-                  aria-pressed={theme === item.id}
-                  onClick={() => pickTheme(item.id)}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
-          </div>
+          <button
+            type="button"
+            className="icon-button settings-button"
+            onClick={() => setSettingsOpen(true)}
+            title="Settings"
+            aria-label="Settings"
+          >
+            <GearIcon />
+          </button>
         </div>
         {appUpdate && (
           <div className="update-banner">
@@ -394,6 +386,10 @@ export default function App() {
           <p className="empty">No addons match this filter.</p>
         )}
       </section>
+      )}
+
+      {settingsOpen && (
+        <SettingsDialog theme={theme} onThemeChange={pickTheme} onClose={closeSettings} />
       )}
 
       {notice && (
