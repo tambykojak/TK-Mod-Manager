@@ -1,37 +1,38 @@
 ---
-description: Ship each change from its own worktree with a pull request
+description: Ship each change on its own branch with a pull request
 alwaysApply: true
 ---
 
 # Git workflow
 
-This standing instruction is the ask. Do not wait for another "commit" or "open a PR." This folder stays on `main`. Each change is edited in its own worktree, then shipped. A question or a plan does not get a worktree.
+This standing instruction is the ask. Do not wait for another "commit" or "open a PR."
 
 ## Start
 
 Before the first edit:
 
-1. Fetch `origin`. If this folder is on a clean `main`, pull. If it is not on `main`, or it has uncommitted work, stop. Do not switch its branch.
-2. If `.worktrees/` is missing, create it. That folder is gitignored.
-3. Add a worktree from `origin/main`. Branch: `addon/<name>/<short>`, `tkmm/<short>`, `web/<short>`, or `fix/<short>`. The folder uses hyphens, such as `.worktrees/addon-junkmaster-sell-junk`.
-4. Edit only inside that worktree.
+1. Fetch `origin`. If this folder is on a clean `main`, pull.
+2. If this change already has a branch, stay on it. Otherwise branch from `origin/main`. Name it `addon/<name>/<short>`, `tkmm/<short>`, `web/<short>`, or `fix/<short>`.
+3. Edit on that branch.
 
-A change that spans turns keeps its worktree. Unrelated addon, site, and app work each get their own.
+A question or a plan does not get a branch. A change that spans turns stays on its branch. Unrelated addon, site, and app work each get their own branch.
+
+If the folder has uncommitted work that is not this change, stop. Do not switch off a branch that has uncommitted work.
 
 ## Ship
 
 When the change is done:
 
-1. Commit in the worktree. The subject is imperative and says why, in one or two sentences: `Sell grey junk in one vendor pass.`
+1. Commit on the branch. The subject is imperative and says why, in one or two sentences: `Sell grey junk in one vendor pass.`
 2. Rebase onto `origin/main` when the branch is behind. If the rebase conflicts, stop and name the files.
 3. Push, open a pull request, and squash-merge it. The title matches the commit. The body says what a player or the app can do now, and how to check it.
-4. Delete the branch, remove the worktree, and pull `main` in this folder.
+4. Check out `main`, pull, and delete the branch.
 
 Do not merge a change that is unfinished.
 
 ## Parallel agents
 
-Each agent has its own worktree. Two agents do not both edit `Common/`, `Libs/`, `Scripts/`, `TKMM/`, `Web/`, or the same addon. The one that finishes second rebases before merging. An overlap stays in its worktree.
+Two agents do not both edit `Common/`, `Libs/`, `Scripts/`, `TKMM/`, `Web/`, or the same addon. The one that finishes second rebases before merging. An overlap stays on its branch.
 
 ## Still ask first
 
@@ -39,4 +40,4 @@ Each agent has its own worktree. Two agents do not both edit `Common/`, `Libs/`,
 - Do not force-push `main`, hard-reset, or skip hooks.
 - Leave out secrets, signing keys, `node_modules`, Rust `target`, `dist`, and Terraform state.
 
-A `TKMM/` or `Web/` worktree needs its own `npm install`. An addon worktree does not. If the push or merge fails, stop and say what blocked it. Leave the worktree in place.
+`TKMM/` or `Web/` needs `npm install` before you run it. An addon change does not. If the push or merge fails, stop and say what blocked it.
