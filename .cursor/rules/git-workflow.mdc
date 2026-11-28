@@ -12,7 +12,7 @@ This standing instruction is the ask. Do not wait for another "commit" or "open 
 Before the first edit:
 
 1. Fetch `origin`. If this folder is on a clean `main`, pull.
-2. A new agent runs `git checkout -b tambykojak/FOLDER/<short> origin/main`. That creates the branch and checks it out. `FOLDER` is the addon folder name when the change is one addon. Use `Addons` for `Common`, `Libs`, or more than one addon. Use `tkam` for the Windows app, `tkam.com` for the web app, and `tkam` when both change.
+2. A new agent runs `git checkout -b tambykojak/FOLDER/<short> origin/main`. That creates the branch and checks it out. `FOLDER` is the addon folder name when the change is one addon. Use `Addons` for `Common`, `Libs`, or more than one addon. Use `tkam` for the Windows app, `tkam.com` for the web app, and `tkam` when both change. `<short>` is a few words for the change. Do not add a random id.
 3. Then run `git push -fu origin HEAD` or `git push -fu origin tambykojak/FOLDER/<short>`. The new branch must be on the remote.
 4. Edit on that branch.
 
@@ -24,7 +24,7 @@ If the folder has uncommitted work that is not this change, stop. Do not switch 
 
 Once a change is made:
 
-1. Commit on the branch. The subject is imperative and says why, in one or two sentences: `Sell grey junk in one vendor pass.`
+1. One prompt, one commit. Wait for steering, then commit. The subject is imperative and says why, in one or two sentences: `Sell grey junk in one vendor pass.` Put the prompt in the commit message.
 2. Rebase onto `origin/main` when the branch is behind. If the rebase conflicts, stop and name the files.
 3. Push with `git push -fu origin HEAD`. If a pull request is not already created, create it in draft. The title matches the commit. The body says what a player or the app can do now, and how to check it.
 
